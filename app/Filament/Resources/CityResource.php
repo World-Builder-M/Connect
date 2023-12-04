@@ -40,6 +40,7 @@ class CityResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('name')
+                    ->label('Naam')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -53,6 +54,7 @@ class CityResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Naam')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -34,6 +34,7 @@ class DepartmentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Naam')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
@@ -56,9 +57,11 @@ class DepartmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Naam')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('active')
+                    ->label('Actief')
                     ->boolean()
                     ->searchable()
                     ->sortable(),
