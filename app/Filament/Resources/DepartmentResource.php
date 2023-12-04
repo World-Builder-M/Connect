@@ -21,8 +21,11 @@ class DepartmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-share';
 
     protected static ?string $navigationLabel = 'Afdelingen';
+    
+    protected static ?string $modelLabel = 'Afdeling';
 
     protected static ?string $pluralLabel = 'Afdelingen';
+    
 
     public static function form(Form $form): Form
     {

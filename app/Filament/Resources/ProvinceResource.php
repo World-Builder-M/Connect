@@ -17,11 +17,19 @@ class ProvinceResource extends Resource
 {
     protected static ?string $model = Province::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-europe-africa';
 
     protected static ?string $navigationLabel = 'Provincies';
 
+    protected static ?string $modelLabel = 'Provincie';
+
     protected static ?string $pluralLabel = 'Provincies';
+
+    protected static ?string $slug = 'werknemer-provincies';
+
+    protected static ?string $navigationGroup = 'Systeembeheer';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

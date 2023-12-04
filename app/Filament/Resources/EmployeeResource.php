@@ -21,7 +21,11 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationLabel = 'Werknemers';
 
+    protected static ?string $modelLabel = 'Werknemer';
+
     protected static ?string $pluralLabel = 'Werknemers';
+
+    protected static ?string $slug = 'werknemers';
 
     public static function form(Form $form): Form
     {

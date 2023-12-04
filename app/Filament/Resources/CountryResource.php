@@ -22,9 +22,15 @@ class CountryResource extends Resource
 
     protected static ?string $navigationLabel = 'Landen';
     
-    protected static ?string $modelLabel = 'Landen';
+    protected static ?string $modelLabel = 'Land';
 
     protected static ?string $pluralLabel = 'Landen';
+
+    protected static ?string $slug = 'werknemer-landen';
+
+    protected static ?string $navigationGroup = 'Systeembeheer';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
