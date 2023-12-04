@@ -12,11 +12,6 @@ class Department extends Model
 
     protected $fillable = ['name', 'description', 'active', 'start_date', 'end_date'];
 
-    protected static function boot()
-    {
-        parent::boot();
-    }
-
     public function getActiveAttribute()
     {
         $now = Carbon::now();
