@@ -60,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()
                     ->defaultLocales(['en', 'nl']),
-            );
+            )
+            ->emailVerification();
     }
 }
