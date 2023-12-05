@@ -14,6 +14,7 @@ class ActiveUserCount extends ChartWidget
     protected static ?string $pollingInterval = '10s';
 
     protected static ?string $maxHeight = '300px';
+    
  
     protected function getData(): array
     {
