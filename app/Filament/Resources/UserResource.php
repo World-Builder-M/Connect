@@ -8,6 +8,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Enums\MembershipPlan;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,8 +34,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Gebruikerbeheer';
 
-    protected static ?int $navigationSort = 1;
-
+    protected static ?int $navigationSort = -2;
 
     public static function form(Form $form): Form
     {
@@ -53,6 +53,12 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->hidden(fn($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
+                    ->hidden(fn($livewire) => $livewire instanceof ViewUser),
             ]);
     }
 
@@ -80,7 +86,11 @@ class UserResource extends Resource
                         MembershipPlan::STANDARD => 'warning',
                         MembershipPlan::PREMIUM  => 'success'
                         }),
-                    
+                // Tables\Columns\TextColumn::make('roles')
+                //     ->relationship('roles', 'name')
+                //     ->multiple()
+                //     ->preload()
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

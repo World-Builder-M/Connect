@@ -7,9 +7,13 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DepartmentResource\Pages;
 use App\Filament\Resources\DepartmentResource\RelationManagers;
@@ -21,7 +25,7 @@ class DepartmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-share';
 
     protected static ?string $navigationLabel = 'Afdelingen';
-    
+
     protected static ?string $modelLabel = 'Afdeling';
 
     protected static ?string $pluralLabel = 'Afdelingen';
@@ -30,8 +34,8 @@ class DepartmentResource extends Resource
 
     protected static ?string $navigationGroup = 'Systeembeheer';
 
-    protected static ?int $navigationSort = 0;
-    
+    protected static ?int $navigationSort = -4;
+
 
     public static function form(Form $form): Form
     {
@@ -70,6 +74,11 @@ class DepartmentResource extends Resource
                     ->label('Naam')
                     ->searchable()
                     ->sortable(),
+                    Tables\Columns\TextColumn::make('employees_count')
+                    ->counts('employees')
+                    ->label('Werknemers')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('active')
                     ->label('Actief')
                     ->boolean()
@@ -77,12 +86,12 @@ class DepartmentResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-            //
+                //
             ])
-            
+
             ->actions([
                 Tables\Actions\ViewAction::make(),
-            //  Tables\Actions\EditAction::make(),
+                //  Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -90,14 +99,30 @@ class DepartmentResource extends Resource
                 ]),
             ]);
     }
-    
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Afdeling')
+                    ->schema([
+                        TextEntry::make('name')->label('Naam'),
+                        TextEntry::make('employees_count')
+                        ->label('Werknemers in totaal')
+                        ->state(function (Model $record): int {
+                        return $record->employees()->count();
+                        }),
+                    ]),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getNavigationBadge(): ?string
     {
         try {
@@ -106,7 +131,7 @@ class DepartmentResource extends Resource
             return 0;
         }
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -115,5 +140,5 @@ class DepartmentResource extends Resource
             'view'   => Pages\ViewDepartment::route('/{record}'),
             'edit'   => Pages\EditDepartment::route('/{record}/edit'),
         ];
-    }    
+    }
 }

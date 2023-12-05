@@ -71,6 +71,9 @@ class AdminPanelProvider extends PanelProvider
                 SpatieLaravelTranslatablePlugin::make()
                     ->defaultLocales(['en', 'nl']),
             )
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
             ->emailVerification();
     }
 }

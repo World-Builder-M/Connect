@@ -13,10 +13,14 @@ use App\Models\Province;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
@@ -37,7 +41,7 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationGroup = 'Personeelbeheer';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = -3;
 
 
     public static function form(Form $form): Form
@@ -177,6 +181,42 @@ class EmployeeResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    // TODO: Make this prettier
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Vestigingslocatie & Afdeling')
+                    ->schema([
+                        TextEntry::make('country.name')
+                        ->label('Land'),
+                        TextEntry::make(
+                            'province.name'
+                        )->label('Provincie'),
+                        TextEntry::make(
+                            'city.name'
+                        )->label('Stad'),
+                        TextEntry::make('department.name')
+                        ->label('Afdeling'),
+                    ])->columns(2),
+                Section::make('Naam')
+                    ->schema([
+                        TextEntry::make('first_name'),
+                        TextEntry::make(
+                            'last_name'
+                        ),
+                    ])->columns(2),
+                Section::make('Adres')
+                    ->schema([
+                        TextEntry::make('address')
+                        ->label('Adres'),
+                        TextEntry::make(
+                            'zip_code'
+                        )->label('Postcode'),
+                    ])->columns(2)
             ]);
     }
 
