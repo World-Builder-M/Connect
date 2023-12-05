@@ -54,10 +54,12 @@ class ProvinceResource extends Resource
                 Tables\Columns\TextColumn::make('country.name')
                     ->label('Land')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Provincie')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -67,6 +69,7 @@ class ProvinceResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('country.name')
             ->filters([
                 //
             ])

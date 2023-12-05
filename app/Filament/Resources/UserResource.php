@@ -13,6 +13,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\Pages\EditUser;
+use App\Filament\Resources\UserResource\Pages\ViewUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -49,7 +51,8 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->hidden(fn($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
             ]);
     }
 
@@ -65,11 +68,13 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Actief')
+                    ->sortable()
                     ->boolean()
                     ->getStateUsing(fn ($record): bool => $record->email_verified_at !== null),
                 Tables\Columns\TextColumn::make('membershipPlan.name')
                     ->label('Pakket')
                     ->badge()
+                    ->sortable()
                     ->color(fn (string $state): string => match ($state) {
                         MembershipPlan::BASIC    => 'gray',
                         MembershipPlan::STANDARD => 'warning',
@@ -85,6 +90,7 @@ class UserResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('name')
             ->filters([
                 //
             ])

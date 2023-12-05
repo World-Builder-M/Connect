@@ -131,20 +131,24 @@ class EmployeeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->label('Voornaam')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('last_name')
                     ->label('Achternaam')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('contact_email')
                     ->label('E-Mail')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('zip_code')
                     ->label('Postcode')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('address')
                     ->label('Adres')
                     ->limit(20)
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 // Tables\Columns\TextColumn::make('date_of_birth')
                 //     ->date()
                 //     ->sortable(),
@@ -161,6 +165,7 @@ class EmployeeResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('first_name')
             ->filters([
                 //
             ])
