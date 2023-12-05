@@ -110,11 +110,15 @@ class EmployeeResource extends Resource
                             ->maxLength(255)
                             ->columnSpan(2),
                         Forms\Components\DatePicker::make('date_of_birth')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')   
                             ->label('Geboortedatum')
                             ->required()
                             ->columnSpan(1),
                         Forms\Components\DatePicker::make('hired_at')
                             ->label('In dienst sinds')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
                             ->required()
                             ->columnSpan(1),
                     ])->columns(4),
@@ -139,6 +143,7 @@ class EmployeeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->label('Adres')
+                    ->limit(20)
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('date_of_birth')
                 //     ->date()

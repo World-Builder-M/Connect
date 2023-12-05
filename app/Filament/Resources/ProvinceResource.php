@@ -51,11 +51,12 @@ class ProvinceResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('country_id')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('country.name')
+                    ->label('Land')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Naam')
+                    ->label('Provincie')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
