@@ -44,16 +44,20 @@ class DepartmentResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('Beschrijving')
+                    ->tooltip('Aanvullende basisinformatie over de afdeling')
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('active')
+                    ->label('Actief')
                     ->hidden(),
                 Forms\Components\DatePicker::make('start_date')
-                    ->label('Start Date')
+                    ->label('Startdatum')
+                    ->tooltip('De startdatum van uw afdeling')
                     ->required()
                     ->default($today),
                 Forms\Components\DatePicker::make('end_date')
-                    ->label('End Date')
+                    ->label('Einddatum')
                     ->required(),
             ]);
     }

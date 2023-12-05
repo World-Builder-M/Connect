@@ -44,10 +44,10 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('password')
+                //     ->password()
+                //     ->required()
+                //     ->maxLength(255),
             ]);
     }
 
@@ -59,6 +59,7 @@ class UserResource extends Resource
                     ->label('Naam')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('E-mail')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Actief')
@@ -92,6 +93,15 @@ class UserResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        try {
+            return User::count();
+        } catch (QueryException $e) {
+            return 0;
+        }
     }
     
     public static function getPages(): array

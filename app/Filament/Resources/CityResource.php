@@ -38,9 +38,9 @@ class CityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('province_id')
-                    ->required()
-                    ->numeric(),
+                // Forms\Components\TextInput::make('province_id')
+                //     ->required()
+                //     ->numeric(),
                 Forms\Components\TextInput::make('name')
                     ->label('Naam')
                     ->required()
@@ -52,9 +52,9 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('province_id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('province_id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Naam')
                     ->searchable(),

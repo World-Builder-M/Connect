@@ -24,7 +24,7 @@ class ActiveUserCount extends ChartWidget
             )
             ->perMonth()
             ->count();
-    
+
         return [
             'datasets' => [
                 [

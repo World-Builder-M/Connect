@@ -37,9 +37,9 @@ class ProvinceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
+                // Forms\Components\TextInput::make('country_id')
+                //     ->required()
+                //     ->numeric(),
                 Forms\Components\TextInput::make('name')
                     ->label('Naam')
                     ->required()
@@ -51,9 +51,9 @@ class ProvinceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('country_id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Naam')
                     ->searchable(),
@@ -70,6 +70,7 @@ class ProvinceResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

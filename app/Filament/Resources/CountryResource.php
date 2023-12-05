@@ -37,10 +37,6 @@ class CountryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('name')
-                    ->label('Naam')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->label('Naam')
                     ->required()
@@ -68,6 +64,7 @@ class CountryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

@@ -54,7 +54,7 @@ class EmployeeResource extends Resource
                 ->maxLength(255)
                 ->columnSpan(2),
                 Forms\Components\TextInput::make('contact_email')
-                    ->label('E-mail adres')
+                    ->label('E-mail')
                     ->email()
                     ->required()
                     ->maxLength(255)
@@ -76,6 +76,7 @@ class EmployeeResource extends Resource
                     ->label('In dienst sinds')
                     ->required(),
                     Forms\Components\Select::make('country_id')
+                    ->label('Land')
                     ->options($countries->pluck('name', 'id'))->searchable()
                     ->required()
                     ->columnSpan(2),
