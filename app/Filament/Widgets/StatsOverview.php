@@ -39,9 +39,9 @@ class StatsOverview extends BaseWidget
 
             // TODO
             Stat::make('Gemiddelde tijd op pagina', '3:12')
-                ->beschrijving('3% toename')
-                ->beschrijvingsicoon('heroicon-m-pijl-omhoog-trending')
-                ->kleur('succes'),
+                ->description('3.00%')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
         ];
     }
 }
