@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class MembershipPlan
+enum MembershipPlan
 {
     const BASIC = 'Basic';
     const STANDARD = 'Standard';
