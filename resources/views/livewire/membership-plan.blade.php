@@ -7,18 +7,19 @@
 
     $planName = $membershipPlan->name;
 
+    // temporary workaround
     switch ($planName) {
         case \App\Enums\MembershipPlan::BASIC:
-            $colorClass = 'text-gray-500';
+            $colorClass = '#888888';
             break;
         case \App\Enums\MembershipPlan::STANDARD:
-            $colorClass = 'text-gray-50';
+            $colorClass = '#f0f0f0';
             break;
         case \App\Enums\MembershipPlan::PREMIUM:
-            $colorClass = 'text-amber-400';
+            $colorClass = '#ffbf00';
             break;
         default:
-            $colorClass = 'text-gray-500';
+            $colorClass = '#888888';
             break;
     }
 @endphp
@@ -34,10 +35,9 @@
             <div class="flex-2">
                 <p class="text-xl font-semibold">
                     <span class="text-green-600">$ </span>
-                    <span class="{{ $colorClass }}">{{ $planName }}</span>
+                    <span style="color: {{ $colorClass }} !important;">{{ $planName }}</span>
                 </p>
             </div>
         </div>
     </x-filament::section>
 </x-filament-widgets::widget>
-
