@@ -11,12 +11,14 @@ use App\Enums\MembershipPlan;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Illuminate\Database\QueryException;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ViewUser;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Filament\Tables\Enums\FiltersLayout;
 
 class UserResource extends Resource
 {
@@ -102,8 +104,9 @@ class UserResource extends Resource
             ])
             ->defaultSort('name')
             ->filters([
-                //
-            ])
+                SelectFilter::make('Pakket')
+                ->relationship('membershipPlan', 'name'), 
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),

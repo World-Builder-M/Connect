@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProvinceResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProvinceResource\RelationManagers;
+use App\Filament\Resources\EmployeesResource\RelationManagers\EmployeesRelationManager;
 
 class ProvinceResource extends Resource
 {
@@ -87,7 +88,7 @@ class ProvinceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            EmployeesRelationManager::class,
         ];
     }
 

@@ -13,11 +13,16 @@ use App\Models\Province;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use Illuminate\Support\Carbon;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -171,8 +176,23 @@ class EmployeeResource extends Resource
             ])
             ->defaultSort('first_name')
             ->filters([
-                //
-            ])
+                SelectFilter::make('Department')
+                ->relationship('department', 'name')
+                ->label('Afdeling')
+                ->searchable(),
+                // Filter::make('created_at')
+                // ->form([
+                //    DatePicker::make('date')
+                //    ->label('In dienst sinds'), 
+            ] , layout: FiltersLayout::AboveContentCollapsible)
+            // ->indicateUsing(function (array $data): ?string {
+            //         if (! $data['date']) {
+            //             return null;
+            //         }
+             
+            //         return 'Aangenomen op ' . Carbon::parse($data['date'])->toFormattedDateString();
+            //     }),
+            // ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
