@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\MembershipPlan as MembershipPlanEnum;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'membership_plan_id',
     ];
 
     /**
@@ -43,4 +44,26 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function membershipPlan()
+    {
+        return $this->belongsTo(MembershipPlan::class);
+    }
+
+     /**
+     * Boot function to set default values.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::creating(function ($user) {
+            if (!$user->membership_plan_id) {
+                $basicPlan = \App\Models\MembershipPlan::where('name', \App\Enums\MembershipPlan::BASIC)->first();
+                $user->membership_plan_id = $basicPlan->id ?? null;
+            }
+        });
+    }
+    
+    
 }

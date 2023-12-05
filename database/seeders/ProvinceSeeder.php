@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 class ProvinceSeeder extends Seeder
 {
 
+    // temporary until I find european provinces
+
     /**
      * Auto generated seed file
      *

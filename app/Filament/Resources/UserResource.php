@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Enums\MembershipPlan;
+use Filament\Resources\Resource;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
@@ -44,10 +46,10 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                // Forms\Components\TextInput::make('password')
-                //     ->password()
-                //     ->required()
-                //     ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -65,6 +67,15 @@ class UserResource extends Resource
                     ->label('Actief')
                     ->boolean()
                     ->getStateUsing(fn ($record): bool => $record->email_verified_at !== null),
+                Tables\Columns\TextColumn::make('membershipPlan.name')
+                    ->label('Pakket')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        MembershipPlan::BASIC    => 'gray',
+                        MembershipPlan::STANDARD => 'warning',
+                        MembershipPlan::PREMIUM  => 'success'
+                        }),
+                    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

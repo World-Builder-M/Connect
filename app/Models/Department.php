@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Department extends Model
@@ -11,6 +12,11 @@ class Department extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'active', 'start_date', 'end_date'];
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
 
     public function getActiveAttribute()
     {
