@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EmployeeResource\Pages;
-use App\Filament\Resources\EmployeeResource\RelationManagers;
-use App\Models\Employee;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Country;
+use App\Models\Employee;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EmployeeResource\RelationManagers;
 
 class EmployeeResource extends Resource
 {
@@ -27,63 +29,64 @@ class EmployeeResource extends Resource
 
     protected static ?string $slug = 'werknemers';
 
+    protected static ?string $navigationGroup = 'Personeelbeheer';
+
+    protected static ?int $navigationSort = 0;
+
+
     public static function form(Form $form): Form
     {
+        $countries = Country::all();
+
+        
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('province_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('city_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('department_id')
-                    ->required()
-                    ->numeric(),
+               Forms\Components\Section::make('Persoonsgegevens')
+               ->schema([
                 Forms\Components\TextInput::make('first_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('full_name')
-                    ->maxLength(255),
+                ->label('Voornaam')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\TextInput::make('last_name')
+                ->label('Achternaam')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
                 Forms\Components\TextInput::make('contact_email')
+                    ->label('E-mail adres')
                     ->email()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan(2),
                 Forms\Components\TextInput::make('zip_code')
+                    ->label('Postcode')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan(2),
                 Forms\Components\TextInput::make('address')
+                    ->label('Adres')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan(2),
                 Forms\Components\DatePicker::make('date_of_birth')
+                    ->label('Geboortedatum')
                     ->required(),
                 Forms\Components\DatePicker::make('hired_at')
+                    ->label('In dienst sinds')
                     ->required(),
-            ]);
+                    Forms\Components\Select::make('country_id')
+                    ->options($countries->pluck('name', 'id'))->searchable()
+                    ->required()
+                    ->columnSpan(2),
+            ])->columns(4),
+        ]);
     }
-
+    
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('province_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('city_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('department_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
@@ -124,14 +127,23 @@ class EmployeeResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
+    public static function getNavigationBadge(): ?string
+    {
+        try {
+            return Employee::count();
+        } catch (QueryException $e) {
+            return 0;
+        }
+    }
+
     public static function getPages(): array
     {
         return [
@@ -140,5 +152,5 @@ class EmployeeResource extends Resource
             'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
-    }    
+    }
 }

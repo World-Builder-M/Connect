@@ -25,6 +25,12 @@ class DepartmentResource extends Resource
     protected static ?string $modelLabel = 'Afdeling';
 
     protected static ?string $pluralLabel = 'Afdelingen';
+
+    protected static ?string $slug = 'afdelingen';
+
+    protected static ?string $navigationGroup = 'Systeembeheer';
+
+    protected static ?int $navigationSort = 0;
     
 
     public static function form(Form $form): Form
@@ -93,7 +99,7 @@ class DepartmentResource extends Resource
         try {
             return Department::count();
         } catch (QueryException $e) {
-            return null;
+            return 0;
         }
     }
     

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $fillable = ['first_name', 'last_name', 'team_id', 'department_id', 'organization_id'];
+    protected $fillable = ['first_name', 'last_name', 'team_id', 'department_id', 'country_id', 'city_id', 'province_id'];
 
     public function setFullNameAttribute($value)
     {

@@ -2,23 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CityResource\Pages;
-use App\Filament\Resources\CityResource\RelationManagers;
-use App\Models\City;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\City;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\CityResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CityResource\RelationManagers;
 
 class CityResource extends Resource
 {
     
     protected static ?string $model = City::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-europe-africa';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'Steden';
 
@@ -31,6 +32,7 @@ class CityResource extends Resource
     protected static ?string $navigationGroup = 'Systeembeheer';
 
     protected static ?int $navigationSort = 3;
+
 
     public static function form(Form $form): Form
     {
@@ -85,14 +87,23 @@ class CityResource extends Resource
             //
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        try {
+            return City::count();
+        } catch (QueryException $e) {
+            return 0;
+        }
+    }
     
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCities::route('/'),
+            'index'  => Pages\ListCities::route('/'),
             'create' => Pages\CreateCity::route('/create'),
-            'view' => Pages\ViewCity::route('/{record}'),
-            'edit' => Pages\EditCity::route('/{record}/edit'),
+            'view'   => Pages\ViewCity::route('/{record}'),
+            'edit'   => Pages\EditCity::route('/{record}/edit'),
         ];
     }    
 }

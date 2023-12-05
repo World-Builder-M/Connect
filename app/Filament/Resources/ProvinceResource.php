@@ -2,22 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProvinceResource\Pages;
-use App\Filament\Resources\ProvinceResource\RelationManagers;
-use App\Models\Province;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Province;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\ProvinceResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ProvinceResource\RelationManagers;
 
 class ProvinceResource extends Resource
 {
     protected static ?string $model = Province::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-europe-africa';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     protected static ?string $navigationLabel = 'Provincies';
 
@@ -30,6 +31,7 @@ class ProvinceResource extends Resource
     protected static ?string $navigationGroup = 'Systeembeheer';
 
     protected static ?int $navigationSort = 2;
+
 
     public static function form(Form $form): Form
     {
@@ -82,6 +84,15 @@ class ProvinceResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        try {
+            return Province::count();
+        } catch (QueryException $e) {
+            return 0;
+        }
     }
     
     public static function getPages(): array

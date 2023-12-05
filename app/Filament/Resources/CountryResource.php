@@ -32,10 +32,15 @@ class CountryResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('name')
+                    ->label('Naam')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->label('Naam')
                     ->required()
@@ -84,7 +89,7 @@ class CountryResource extends Resource
         try {
             return Country::count();
         } catch (QueryException $e) {
-            return null;
+            return 0;
         }
     }
 
