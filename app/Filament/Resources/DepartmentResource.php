@@ -17,7 +17,7 @@ use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DepartmentResource\Pages;
 use App\Filament\Resources\DepartmentResource\RelationManagers;
-use App\Filament\Resources\EmployeesResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\DepartmentResource\RelationManagers\EmployeesRelationManager;
 
 class DepartmentResource extends Resource
 {
@@ -33,9 +33,9 @@ class DepartmentResource extends Resource
 
     protected static ?string $slug = 'afdelingen';
 
-    protected static ?string $navigationGroup = 'Systeembeheer';
+    protected static ?string $navigationGroup = 'Personeelbeheer';
 
-    protected static ?int $navigationSort = -4;
+    protected static ?int $navigationSort = -3;
 
 
     public static function form(Form $form): Form

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\CountryResource\RelationManagers;
+namespace App\Filament\Resources\ProvinceResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,22 +10,24 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProvincesRelationManager extends RelationManager
+class CitiesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'provinces';
-    
-    protected static ?string $title = 'Provincies';
+    protected static string $relationship = 'cities';
 
-    protected static ?string $label = 'Provincie';
+    protected static ?string $title = 'Steden';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $label = 'Stad';
+
+    protected static ?string $icon = 'heroicon-o-building-office';
+
+    protected static ?string $pluralLabel = 'steden';
+
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Naam')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,17 +36,15 @@ class ProvincesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('Provincies')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                ->label('Naam'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
-                ->label('Provincie aanmaken'),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

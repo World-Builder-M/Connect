@@ -88,11 +88,11 @@ class UserResource extends Resource
                         MembershipPlan::STANDARD => 'warning',
                         MembershipPlan::PREMIUM  => 'success'
                         }),
-                // Tables\Columns\TextColumn::make('roles')
-                //     ->relationship('roles', 'name')
-                //     ->multiple()
-                //     ->preload()
-                //     ->searchable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Rollen')
+                    ->badge()
+                    ->sortable()
+                    ->separator(', '),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

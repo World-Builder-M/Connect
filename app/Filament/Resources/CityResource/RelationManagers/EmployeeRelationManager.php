@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\CountryResource\RelationManagers;
+namespace App\Filament\Resources\CityResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -10,21 +10,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProvincesRelationManager extends RelationManager
+class EmployeesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'provinces';
-    
-    protected static ?string $title = 'Provincies';
+    protected static string $relationship = 'employees';
 
-    protected static ?string $label = 'Provincie';
+    protected static ?string $title = 'Werknemers';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $label = 'Werknemer';
+
+    protected static ?string $icon = 'heroicon-o-user-group';
+
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('first_name')
                     ->label('Naam')
                     ->required()
                     ->maxLength(255),
@@ -34,17 +35,16 @@ class ProvincesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('Provincies')
+            //->recordTitleAttribute('cities')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('first_name')
                 ->label('Naam'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
-                ->label('Provincie aanmaken'),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

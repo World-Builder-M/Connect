@@ -7,7 +7,10 @@
 
     $planName = $membershipPlan->name;
 
-    // temporary workaround
+    if (!$planName) {
+        $planName = 'Demo';
+    }
+
     switch ($planName) {
         case \App\Enums\MembershipPlan::BASIC:
             $colorClass = '#888888';

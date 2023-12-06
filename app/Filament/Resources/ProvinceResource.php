@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProvinceResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProvinceResource\RelationManagers;
-use App\Filament\Resources\EmployeesResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\ProvinceResource\RelationManagers\CitiesRelationManager;
+use App\Filament\Resources\ProvinceResource\RelationManagers\EmployeesRelationManager;
 
 class ProvinceResource extends Resource
 {
@@ -29,9 +30,9 @@ class ProvinceResource extends Resource
 
     protected static ?string $slug = 'werknemer-provincies';
 
-    protected static ?string $navigationGroup = 'Systeembeheer';
+    protected static ?string $navigationGroup = 'Locaties';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = -2;
 
 
     public static function form(Form $form): Form
@@ -88,7 +89,8 @@ class ProvinceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            EmployeesRelationManager::class,
+           CitiesRelationManager::class,
+        EmployeesRelationManager::class,
         ];
     }
 

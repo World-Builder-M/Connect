@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CityResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CityResource\RelationManagers;
-use App\Filament\Resources\EmployeesResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\CityResource\RelationManagers\EmployeesRelationManager;
 
 class CityResource extends Resource
 {
@@ -30,9 +30,9 @@ class CityResource extends Resource
     
     protected static ?string $slug = 'werknemer-steden';
 
-    protected static ?string $navigationGroup = 'Systeembeheer';
+    protected static ?string $navigationGroup = 'Locaties';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = -1;
 
 
     public static function form(Form $form): Form
