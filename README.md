@@ -7,7 +7,10 @@ components for Accelerated Laravel Development.
 
 I've added Filament Shield for permissions which still need to be configured properly, I will finish this project in my free time.
 
-There is data about European countries, provinces, and cities in the migrations.
+There is data about European countries, provinces, and cities in the seeder folders.
+
+![image](https://github.com/minuut/Connect/assets/70378641/43b2c6b8-a8c1-4ccc-b2ce-d5d1c11599e5)
+
 
 ## Installation
 
