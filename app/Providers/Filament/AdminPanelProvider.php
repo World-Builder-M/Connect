@@ -6,6 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use App\Constants\ThemeColor;
 use App\Livewire\MembershipPlan;
 use App\Livewire\ActiveUserCount;
 use Filament\Support\Colors\Color;
@@ -31,11 +32,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Connect,
+                'primary' => ThemeColor::CONNECT,
                 'danger' => Color::Red,
                 'gray' => Color::Slate,
                 'info' => Color::Blue,
-                'success' => Color::Connect,
+                'success' => ThemeColor::CONNECT,
                 'warning' => Color::Orange,
             ])
             ->font('Poppins')
