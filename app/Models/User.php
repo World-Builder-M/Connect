@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\MembershipPlan as MembershipPlanEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
-use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasAvatar
 {
     use HasApiTokens;
     use HasRoles;
@@ -57,13 +58,13 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->belongsTo(MembershipPlan::class);
     }
 
-     /**
+    /**
      * Boot function to set default values.
      */
     protected static function boot()
     {
         parent::boot();
-    
+
         static::creating(function ($user) {
             if (!$user->membership_plan_id) {
                 $basicPlan = \App\Models\MembershipPlan::where('name', \App\Enums\MembershipPlan::BASIC)->first();
@@ -71,6 +72,26 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             }
         });
     }
-    
-    
+
+    public function canAccessFilament(): bool
+    {
+        return $this->hasVerifiedEmail();
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        // TODO: Configure this
+        $customAvatarPath = public_path('customavater.png');
+
+        if (file_exists($customAvatarPath)) {
+            return asset('connect.png');
+        }
+
+        return $this->avatar_url;
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }
