@@ -1,7 +1,13 @@
 # Connect
  
 ## Introduction
-Dit is een project wat ik heb gemaakt om Filament V3 te leren.
+
+This project is my playground for learning Filament V3, a handy collection of beautiful full-stack
+components for Accelerated Laravel Development. 
+
+I've added Filament Shield for permissions which still need to be configured properly, but as an admin you can see everything.
+
+There is data about European countries, provinces, and cities in the migrations.
 
 ## Installation
 
