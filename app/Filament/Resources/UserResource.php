@@ -54,13 +54,12 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255)
-                    ->hidden(fn($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
+                    ->hidden(fn ($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable()
-                    ->hidden(fn($livewire) => $livewire instanceof ViewUser),
+                    ->label('Rol')
+                    ->preload(),
+                    //->hidden(fn ($livewire) => $livewire instanceof ViewUser)
             ]);
     }
 
@@ -87,12 +86,27 @@ class UserResource extends Resource
                         MembershipPlan::BASIC    => 'gray',
                         MembershipPlan::STANDARD => 'warning',
                         MembershipPlan::PREMIUM  => 'success'
-                        }),
+                    })
+                    ->formatStateUsing(function (string $state): string {
+                        switch ($state) {
+                            case MembershipPlan::BASIC:
+                                return 'Basis';
+                            case MembershipPlan::STANDARD:
+                                return 'Standaard';
+                            case MembershipPlan::PREMIUM:
+                                return 'Premium';
+                            default:
+                                return $state;
+                        }
+                    }),
                 Tables\Columns\TextColumn::make('roles.name')
                     ->label('Rollen')
                     ->badge()
                     ->sortable()
-                    ->separator(', '),
+                    ->separator(', ')
+                    ->formatStateUsing(function (string $state): string {
+                        return implode(', ', array_map('ucfirst', explode(', ', $state)));
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -104,8 +118,9 @@ class UserResource extends Resource
             ])
             ->defaultSort('name')
             ->filters([
+                // TODO: Translate these to dutch
                 SelectFilter::make('Pakket')
-                ->relationship('membershipPlan', 'name'), 
+                    ->relationship('membershipPlan', 'name'),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -117,7 +132,7 @@ class UserResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
@@ -138,7 +153,7 @@ class UserResource extends Resource
     {
         return static::getModel()::count() > 0 ? 'primary' : 'gray';
     }
-    
+
     public static function getPages(): array
     {
         return [
