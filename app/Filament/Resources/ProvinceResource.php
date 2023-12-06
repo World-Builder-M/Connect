@@ -39,13 +39,14 @@ class ProvinceResource extends Resource
     {
         return $form
             ->schema([
-                // Forms\Components\TextInput::make('country_id')
-                //     ->required()
-                //     ->numeric(),
                 Forms\Components\TextInput::make('name')
-                    ->label('Naam')
+                    ->label('Provincie')
                     ->required()
                     ->maxLength(255),
+                // Forms\Components\Select::make('country_id')
+                //     ->relationship(name: 'country', titleAttribute: 'name')
+                //     ->label('Land')
+                //     ->preload(),
             ]);
     }
 
@@ -85,12 +86,12 @@ class ProvinceResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-           CitiesRelationManager::class,
-        EmployeesRelationManager::class,
+            // CitiesRelationManager::class,
+            // EmployeesRelationManager::class,
         ];
     }
 
@@ -102,7 +103,7 @@ class ProvinceResource extends Resource
             return 0;
         }
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -110,5 +111,5 @@ class ProvinceResource extends Resource
             'create' => Pages\CreateProvince::route('/create'),
             'edit' => Pages\EditProvince::route('/{record}/edit'),
         ];
-    }    
+    }
 }

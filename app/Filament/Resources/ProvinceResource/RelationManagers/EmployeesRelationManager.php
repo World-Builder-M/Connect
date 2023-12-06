@@ -3,12 +3,17 @@
 namespace App\Filament\Resources\ProvinceResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use App\Models\Province;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class EmployeesRelationManager extends RelationManager
 {
@@ -25,30 +30,8 @@ class EmployeesRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('first_name')
-                    ->label('Voornaam')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->label('Achternaam')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('contact_email')
-                    ->label('E-mail')
-                    ->email()
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('zip_code')
-                    ->label('Postcode')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('address')
-                    ->label('Adres')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
             ]);
     }
 
@@ -59,22 +42,7 @@ class EmployeesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
                     ->label('Voornaam'),
-                Tables\Columns\TextColumn::make('last_name')
-                    ->label('Achternaam')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('contact_email')
-                    ->label('E-Mail')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('zip_code')
-                    ->label('Postcode')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->label('Adres')
-                    ->limit(20)
-                    ->searchable()
-                    ->sortable(),
+                
             ])
             ->filters([
                 //

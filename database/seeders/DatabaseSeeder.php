@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Dit is Amerikaanse data voor lokaal testen
-        $this->call(CountrySeeder::class);
-        $this->call(ProvinceSeeder::class);
-        $this->call(CitySeeder::class); 
+        // $this->call(CountrySeeder::class);
+        // $this->call(ProvinceSeeder::class);
+        // $this->call(CitySeeder::class); 
 
-        $this->call(UserSeeder::class);
+         $this->call(UserSeeder::class);
 
         // Abonnement enum voor gebruikers
-        $this->call(MembershipPlanSeeder::class);
+        // $this->call(MembershipPlanSeeder::class);
 
     }
 }

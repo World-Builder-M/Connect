@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
-    protected $fillable = ['first_name', 'last_name', 'team_id', 'department_id', 'country_id', 'city_id', 'province_id', 'contact_email', 'zip_code','address', 'date_of_birth', 'hired_at'];
-
+    use HasFactory;
+    
+    protected $guarded = [];
 
     public function department(): BelongsTo
     {

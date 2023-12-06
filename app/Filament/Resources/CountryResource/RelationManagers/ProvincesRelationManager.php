@@ -18,14 +18,14 @@ class ProvincesRelationManager extends RelationManager
 
     protected static ?string $label = 'Provincie';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $icon = 'heroicon-o-building-office-2';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Naam')
+                    ->label('Provincie')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -36,8 +36,8 @@ class ProvincesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Provincies')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                ->label('Naam'),
+                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //

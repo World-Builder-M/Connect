@@ -25,30 +25,43 @@ class EmployeesRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('first_name')
-                    ->label('Voornaam')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->label('Achternaam')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('contact_email')
-                    ->label('E-mail')
-                    ->email()
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('zip_code')
-                    ->label('Postcode')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                Forms\Components\TextInput::make('address')
-                    ->label('Adres')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
+                ->label('Voornaam')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\TextInput::make('last_name')
+                ->label('Achternaam')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\TextInput::make('contact_email')
+                ->label('E-mail')
+                ->email()
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\TextInput::make('zip_code')
+                ->label('Postcode')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\TextInput::make('address')
+                ->label('Adres')
+                ->required()
+                ->maxLength(255)
+                ->columnSpan(2),
+            Forms\Components\DatePicker::make('date_of_birth')
+                ->native(false)
+                ->displayFormat('d/m/Y')   
+                ->label('Geboortedatum')
+                ->required()
+                ->columnSpan(1),
+            Forms\Components\DatePicker::make('hired_at')
+                ->label('In dienst sinds')
+                ->native(false)
+                ->displayFormat('d/m/Y')
+                ->required()
+                ->columnSpan(1),
             ]);
     }
 

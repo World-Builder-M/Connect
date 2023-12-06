@@ -15,7 +15,9 @@ class Province extends Model
 
     protected $fillable = [
         'country_id',
-        'name'
+        'country_code',
+        'iso2',
+        'name',
     ];
 
     public function country(): BelongsTo

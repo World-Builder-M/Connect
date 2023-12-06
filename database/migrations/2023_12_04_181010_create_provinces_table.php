@@ -9,20 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('country_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->unsignedInteger('country_id')->index();
-            $table->string('country_code');
-            $table->string('fips_code')->nullable();
-            $table->string('iso2');
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
             $table->timestamps();
-            $table->boolean('flag')->default(0);
-            $table->text('wikiDataId')->nullable();
         });
     }
 

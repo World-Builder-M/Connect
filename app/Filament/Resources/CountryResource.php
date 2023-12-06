@@ -23,7 +23,7 @@ class CountryResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-globe-europe-africa';
 
     protected static ?string $navigationLabel = 'Landen';
-    
+
     protected static ?string $modelLabel = 'Land';
 
     protected static ?string $pluralLabel = 'Landen';
@@ -43,15 +43,32 @@ class CountryResource extends Resource
                     ->label('Naam')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('code')
+                    ->label('Landcode (ISO)')
+                    ->required()
+                    ->maxLength(3),
+                Forms\Components\TextInput::make('phonecode')
+                    ->label('Telefooncode')
+                    ->required()
+                    ->maxLength(3),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Naam')
+                    ->label('Land')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Landcode (ISO)')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('phonecode')
+                    ->label('Netnummer')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -76,15 +93,15 @@ class CountryResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-              ProvincesRelationManager::class,
-        //    EmployeesRelationManager::class,
+            ProvincesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
-    
+
     public static function getNavigationBadge(): ?string
     {
         try {
@@ -101,5 +118,5 @@ class CountryResource extends Resource
             'create' => Pages\CreateCountry::route('/create'),
             'edit' => Pages\EditCountry::route('/{record}/edit'),
         ];
-    }    
+    }
 }

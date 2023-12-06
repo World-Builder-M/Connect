@@ -53,11 +53,13 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('province_id')
-                //     ->numeric()
-                //     ->sortable(),
+                Tables\Columns\TextColumn::make('province.name')
+                    ->label('Provincie')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Naam')
+                    ->label('Stad')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
