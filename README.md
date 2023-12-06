@@ -5,7 +5,7 @@
 This project is my playground for learning Filament V3, a handy collection of beautiful full-stack
 components for Accelerated Laravel Development. 
 
-I've added Filament Shield for permissions which still need to be configured properly, I will finish this project in my free time.
+I've added Filament Shield for permission handling. I will be expanding this project in my free time.
 
 There is data about European countries, provinces, and cities in the seeder folders.
 
