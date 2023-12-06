@@ -46,6 +46,8 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationGroup = 'Personeelbeheer';
 
+    protected static ?string $recordTitleAttribute = 'first_name';
+
     protected static ?int $navigationSort = -3;
 
 
@@ -120,7 +122,7 @@ class EmployeeResource extends Resource
                             ->columnSpan(2),
                         Forms\Components\DatePicker::make('date_of_birth')
                             ->native(false)
-                            ->displayFormat('d/m/Y')   
+                            ->displayFormat('d/m/Y')
                             ->label('Geboortedatum')
                             ->required()
                             ->columnSpan(1),
@@ -177,19 +179,19 @@ class EmployeeResource extends Resource
             ->defaultSort('first_name')
             ->filters([
                 SelectFilter::make('Department')
-                ->relationship('department', 'name')
-                ->label('Afdeling')
-                ->searchable(),
+                    ->relationship('department', 'name')
+                    ->label('Afdeling')
+                    ->searchable(),
                 // Filter::make('created_at')
                 // ->form([
                 //    DatePicker::make('date')
                 //    ->label('In dienst sinds'), 
-            ] , layout: FiltersLayout::AboveContentCollapsible)
+            ])
             // ->indicateUsing(function (array $data): ?string {
             //         if (! $data['date']) {
             //             return null;
             //         }
-             
+
             //         return 'Aangenomen op ' . Carbon::parse($data['date'])->toFormattedDateString();
             //     }),
             // ])
@@ -212,7 +214,7 @@ class EmployeeResource extends Resource
                 Section::make('Vestigingslocatie & Afdeling')
                     ->schema([
                         TextEntry::make('country.name')
-                        ->label('Land'),
+                            ->label('Land'),
                         TextEntry::make(
                             'province.name'
                         )->label('Provincie'),
@@ -220,7 +222,7 @@ class EmployeeResource extends Resource
                             'city.name'
                         )->label('Stad'),
                         TextEntry::make('department.name')
-                        ->label('Afdeling'),
+                            ->label('Afdeling'),
                     ])->columns(2),
                 Section::make('Naam')
                     ->schema([
@@ -232,13 +234,21 @@ class EmployeeResource extends Resource
                 Section::make('Adres')
                     ->schema([
                         TextEntry::make('address')
-                        ->label('Adres'),
+                            ->label('Adres'),
                         TextEntry::make(
                             'zip_code'
                         )->label('Postcode'),
                     ])->columns(2)
             ]);
     }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['first_name', 'last_name', 'zip_code'];
+    }
+
+    // protected static function getGlobalSearchResultTitle(Model $record): string 
+    // { return $record->zip_code; }
 
     public static function getRelations(): array
     {
@@ -250,10 +260,15 @@ class EmployeeResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         try {
-            return Employee::count();
+            return static::getModel()::count();
         } catch (QueryException $e) {
             return 0;
         }
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 0 ? 'primary' : 'gray';
     }
 
     public static function getPages(): array

@@ -14,7 +14,7 @@ use App\Filament\Resources\CountryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CountryResource\RelationManagers;
 use App\Filament\Resources\CountryResource\RelationManagers\ProvincesRelationManager;
-use App\Filament\Resources\EmployeesResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
 
 class CountryResource extends Resource
 {
@@ -31,6 +31,8 @@ class CountryResource extends Resource
     protected static ?string $slug = 'werknemer-landen';
 
     protected static ?string $navigationGroup = 'Locaties';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = -2;
 
@@ -105,10 +107,15 @@ class CountryResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         try {
-            return Country::count();
+            return static::getModel()::count();
         } catch (QueryException $e) {
             return 0;
         }
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 0 ? 'primary' : 'gray';
     }
 
     public static function getPages(): array

@@ -35,6 +35,8 @@ class DepartmentResource extends Resource
 
     protected static ?string $navigationGroup = 'Personeelbeheer';
 
+    protected static ?string $recordTitleAttribute = 'name';
+        
     protected static ?int $navigationSort = -3;
 
 
@@ -127,10 +129,15 @@ class DepartmentResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         try {
-            return Department::count();
+            return static::getModel()::count();
         } catch (QueryException $e) {
             return 0;
         }
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 0 ? 'primary' : 'gray';
     }
 
     public static function getPages(): array

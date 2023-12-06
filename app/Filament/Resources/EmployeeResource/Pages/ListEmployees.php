@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\EmployeeResource\Pages;
 
-use App\Filament\Resources\EmployeeResource;
 use Filament\Actions;
+use App\Models\Employee;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\EmployeeResource;
+use Filament\Resources\Pages\ListRecords\Tab;
+use App\Filament\Resources\EmployeeResource\Widgets\EmployeeOverview;
 
 class ListEmployees extends ListRecords
 {
@@ -14,6 +18,28 @@ class ListEmployees extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'Alle' => Tab::make(),
+            'Vandaag' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('hired_at', '>=', now()->today()))
+                ->badge(Employee::query()->where('hired_at', '>=', now()->today())->count()),
+            'Deze maand' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('hired_at', '>=', now()->subMonth()))
+                ->badge(Employee::query()->where('hired_at', '>=', now()->subMonth())->count()),
+            'Dit jaar' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('hired_at', '>=', now()->subYear()))
+                ->badge(Employee::query()->where('hired_at', '>=', now()->subYear())->count()),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array {
+        return [
+            EmployeeOverview::class,
         ];
     }
 }

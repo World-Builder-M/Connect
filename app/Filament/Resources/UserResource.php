@@ -128,10 +128,15 @@ class UserResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         try {
-            return User::count();
+            return static::getModel()::count();
         } catch (QueryException $e) {
             return 0;
         }
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 0 ? 'primary' : 'gray';
     }
     
     public static function getPages(): array
