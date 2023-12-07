@@ -94,6 +94,13 @@ class EmployeesRelationManager extends RelationManager
                     ->limit(20)
                     ->searchable()
                     ->sortable(),
+                
+                /** This is tenant aware now because of the ApplyTenantScope middleware */
+                
+                //  Tables\Columns\IconColumn::make('id')
+                // ->label('Impersonate')
+                // ->boolean()
+                // ->trueIcon('heroicon-o-eye'),
             ])
             ->filters([
                 //

@@ -10,6 +10,7 @@ use App\Models\Organisation;
 use App\Constants\ThemeColor;
 use App\Livewire\ActiveUserCount;
 use Filament\Support\Colors\Color;
+use App\Http\Middleware\ApplyTenantScopes;
 use Filament\Http\Middleware\Authenticate;
 use Filament\SpatieLaravelTranslatablePlugin;
 use Illuminate\Session\Middleware\StartSession;
@@ -80,6 +81,13 @@ class AppPanelProvider extends PanelProvider
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()
                     ->defaultLocales(['en', 'nl']),
-            );
+            )
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
+            ->tenantMiddleware([
+                ApplyTenantScopes::class,
+            ], isPersistent: true)
+            ;
     }
 }
