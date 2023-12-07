@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\DepartmentResource\RelationManagers;
+namespace App\Filament\App\Resources\DepartmentResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -27,7 +27,8 @@ class EmployeesRelationManager extends RelationManager
                 Forms\Components\TextInput::make('first_name')
                     ->label('Voornaam')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpan(2),
                 Forms\Components\TextInput::make('last_name')
                     ->label('Achternaam')
                     ->required()
@@ -49,6 +50,24 @@ class EmployeesRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255)
                     ->columnSpan(2),
+                Forms\Components\DatePicker::make('date_of_birth')
+                    ->native(false)
+                    ->displayFormat('d/m/Y')
+                    ->label('Geboortedatum')
+                    ->required()
+                    ->columnSpan(1),
+                Forms\Components\DatePicker::make('hired_at')
+                    ->label('In dienst sinds')
+                    ->native(false)
+                    ->displayFormat('d/m/Y')
+                    ->required()
+                    ->columnSpan(1),
+                
+                Forms\Components\Hidden::make('organisation_id')
+                    ->default(function (RelationManager $livewire) {
+                        return $livewire->ownerRecord->organisation()->value('id');
+                    })
+                    ->columns(4),
             ]);
     }
 
@@ -72,15 +91,9 @@ class EmployeesRelationManager extends RelationManager
                     ->sortable(),
                 Tables\Columns\TextColumn::make('address')
                     ->label('Adres')
-                    ->limit(10)
+                    ->limit(20)
                     ->searchable()
                     ->sortable(),
-
-                // TODO: Implement impersonate
-                Tables\Columns\IconColumn::make('id')
-                ->label('Impersonate')
-                ->boolean()
-                ->trueIcon('heroicon-o-eye'),
             ])
             ->filters([
                 //

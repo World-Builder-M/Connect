@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
 use Filament\Forms;
 use App\Models\City;
@@ -13,6 +13,8 @@ use App\Models\Province;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Facades\Filament;
 use Illuminate\Support\Carbon;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -44,12 +46,11 @@ class EmployeeResource extends Resource
 
     protected static ?string $slug = 'werknemers';
 
-    protected static ?string $navigationGroup = 'Personeelbeheer';
+    protected static ?string $navigationGroup = 'Organisatie beheer';
 
     protected static ?string $recordTitleAttribute = 'first_name';
 
     protected static ?int $navigationSort = -3;
-
 
     public static function form(Form $form): Form
     {
@@ -87,7 +88,11 @@ class EmployeeResource extends Resource
                             ->preload(),
                         Forms\Components\Select::make('department_id')
                             ->label('Afdeling')
-                            ->relationship(name: 'department', titleAttribute: 'name')
+                            ->relationship(
+                                name: 'department', 
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn(Builder $query) => $query->whereBelongsTo(Filament::getTenant())
+                                )
                             ->searchable()
                             ->preload()
                             ->required(),
@@ -138,6 +143,10 @@ class EmployeeResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $url = url()->current();
+        
+        $isAdmin = Str::startsWith($url, url('/admin'));
+        
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('first_name')
@@ -160,6 +169,7 @@ class EmployeeResource extends Resource
                     ->limit(20)
                     ->searchable()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('hired_at')
                     ->label('In dienst sinds')
                     ->date()
@@ -203,7 +213,6 @@ class EmployeeResource extends Resource
             ]);
     }
 
-    // TODO: Make this prettier
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -247,15 +256,7 @@ class EmployeeResource extends Resource
                     ])->columns(2)
             ]);
     }
-
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['first_name', 'last_name', 'zip_code'];
-    }
-
-    // protected static function getGlobalSearchResultTitle(Model $record): string 
-    // { return $record->zip_code; }
-
+    
     public static function getRelations(): array
     {
         return [
@@ -263,22 +264,12 @@ class EmployeeResource extends Resource
         ];
     }
 
-    public static function getNavigationBadge(): ?string
-    {
-        try {
-            return static::getModel()::count();
-        } catch (QueryException $e) {
-            return 0;
-        }
-    }
-
-
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 0 ? 'primary' : 'gray';
-    }
-
+    // public static function getNavigationBadge(): ?string
+    // {
+    //       $e = '✓';
+    //       return $e;
+    // }
+    
     public static function getPages(): array
     {
         return [
@@ -287,5 +278,5 @@ class EmployeeResource extends Resource
             'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
-    }
+    }    
 }

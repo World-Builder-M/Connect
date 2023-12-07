@@ -25,7 +25,6 @@ class StatsOverview extends BaseWidget
         $previousDepartmentPeriodCount = Department::whereBetween('created_at', [now()->subDays(60), now()->subDays(30)])->count();
         $newDepartmentsGrowth = $previousDepartmentPeriodCount > 0 ? (($newDepartmentCount - $previousDepartmentPeriodCount) / $previousDepartmentPeriodCount) * 100 : 0;
 
-
         return [
             Stat::make('Nieuwe gebruikers', number_format($newUsersCount))
                 ->description(number_format($newUsersGrowth, 2) . '%')

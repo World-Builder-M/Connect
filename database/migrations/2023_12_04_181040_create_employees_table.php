@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('province_id')->constrained()->cascadeOnDelete();
             $table->foreignId('city_id')->constrained()->cascadeOnDelete();
             $table->foreignId('department_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('organisation_id')->constrained()->cascadeOnDelete();
             
             $table->string('first_name');
             $table->string('last_name');

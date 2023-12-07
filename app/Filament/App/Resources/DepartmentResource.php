@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -9,15 +9,16 @@ use App\Models\Department;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\DepartmentResource\Pages;
-use App\Filament\Resources\DepartmentResource\RelationManagers;
-use App\Filament\Resources\DepartmentResource\RelationManagers\EmployeesRelationManager;
+use App\Filament\App\Resources\DepartmentResource\Pages;
+use App\Filament\App\Resources\DepartmentResource\RelationManagers;
+use App\Filament\App\Resources\DepartmentResource\RelationManagers\EmployeesRelationManager;
 
 class DepartmentResource extends Resource
 {
@@ -33,12 +34,9 @@ class DepartmentResource extends Resource
 
     protected static ?string $slug = 'afdelingen';
 
-    protected static ?string $navigationGroup = 'Personeelbeheer';
+    protected static ?string $navigationGroup = 'Organisatie beheer';
 
-    protected static ?string $recordTitleAttribute = 'name';
-        
-    protected static ?int $navigationSort = -3;
-
+    protected static ?int $navigationSort = -4;
 
     public static function form(Form $form): Form
     {
@@ -82,9 +80,6 @@ class DepartmentResource extends Resource
                     ->label('Werknemers')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('organisation.name')
-                    ->label('Organisatie')
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('active')
                     ->label('Actief')
                     ->boolean()
@@ -97,7 +92,7 @@ class DepartmentResource extends Resource
 
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                //  Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -122,34 +117,26 @@ class DepartmentResource extends Resource
             ]);
     }
 
+    // public static function getNavigationBadge(): ?string
+    // {
+    //       $e = '✓';
+    //       return $e;
+    // }
+    
     public static function getRelations(): array
     {
         return [
             EmployeesRelationManager::class,
         ];
     }
-
-    public static function getNavigationBadge(): ?string
-    {
-        try {
-            return static::getModel()::count();
-        } catch (QueryException $e) {
-            return 0;
-        }
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 0 ? 'primary' : 'gray';
-    }
-
+    
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDepartments::route('/'),
+            'index' => Pages\ListDepartments::route('/'),
             'create' => Pages\CreateDepartment::route('/create'),
-            'view'   => Pages\ViewDepartment::route('/{record}'),
-            'edit'   => Pages\EditDepartment::route('/{record}/edit'),
+            'view' => Pages\ViewDepartment::route('/{record}'),
+            'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
-    }
+    }    
 }

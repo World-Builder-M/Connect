@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EmployeeResource\Pages;
 
 use Filament\Actions;
 use App\Models\Employee;
+use Illuminate\Support\Str;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EmployeeResource;
@@ -23,7 +24,11 @@ class ListEmployees extends ListRecords
 
     public function getTabs(): array
     {
-        return [
+        $url = url()->current();
+        
+        $isAdmin = Str::startsWith($url, url('/admin'));
+
+        $tabs = [
             'Alle' => Tab::make(),
             'Vandaag' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('hired_at', '>=', now()->today()))
@@ -35,9 +40,17 @@ class ListEmployees extends ListRecords
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('hired_at', '>=', now()->subYear()))
                 ->badge(Employee::query()->where('hired_at', '>=', now()->subYear())->count()),
         ];
+
+        if ($isAdmin) {
+            return $tabs;
+        } else {
+            return [];
+        }
     }
 
-    protected function getHeaderWidgets(): array {
+
+    protected function getHeaderWidgets(): array
+    {
         return [
             EmployeeOverview::class,
         ];

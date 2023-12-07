@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
+use Filament\Panel;
+use App\Models\Organisation;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Collection;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\HasTenants;
 use Filament\Models\Contracts\FilamentUser;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\MembershipPlan as MembershipPlanEnum;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasTenants
 {
     use HasApiTokens;
     use HasRoles;
@@ -73,11 +77,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         });
     }
 
-    public function canAccessFilament(): bool
-    {
-        return $this->hasVerifiedEmail();
-    }
-
     public function getFilamentAvatarUrl(): ?string
     {
         // TODO: Configure this
@@ -93,5 +92,20 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     public function getFilamentName(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->organisations;
+    }
+
+    public function organisations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organisation::class);
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->organisations->contains($tenant);
     }
 }

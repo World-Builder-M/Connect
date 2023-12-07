@@ -4,6 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\Europe\Cities\NetherlandsCitySeeder;
+use Database\Seeders\Europe\Provinces\NetherlandsSeeder;
+use Database\Seeders\Europe\Provinces\BelgiumSeeder;
+use Database\Seeders\Europe\Provinces\GermanySeeder;
+use Database\Seeders\Europe\Europe\CountrySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,15 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Dit is Amerikaanse data voor lokaal testen
-        // $this->call(CountrySeeder::class);
-        // $this->call(ProvinceSeeder::class);
-        // $this->call(CitySeeder::class); 
+         $this->call(CountrySeeder::class);
 
-         $this->call(UserSeeder::class);
+         $this->call(NetherlandsSeeder::class);
+         $this->call(BelgiumSeeder::class); 
+         $this->call(GermanySeeder::class); 
 
-        // Abonnement enum voor gebruikers
-        // $this->call(MembershipPlanSeeder::class);
+         $this->call(NetherlandsCitySeeder::class); 
+
+         $this->call(MembershipPlanSeeder::class);
+        //  $this->call(UserSeeder::class);
+
 
     }
 }
