@@ -58,6 +58,7 @@ class UserResource extends Resource
                     ->hidden(fn ($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')
+                    ->multiple()
                     ->label('Rol')
                     ->preload(),
                     //->hidden(fn ($livewire) => $livewire instanceof ViewUser)
