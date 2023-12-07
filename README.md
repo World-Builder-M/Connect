@@ -2,15 +2,10 @@
  
 ## Introduction
 
-This project is my playground for learning Filament V3, a handy collection of beautiful full-stack
-components for Accelerated Laravel Development. 
+This project is my playground for learning Laravel Filament V3.
 
 I've added Filament Shield for permission handling. I will be expanding this project in my free time.
-
-There is data about European countries, provinces, and cities in the seeder folders.
-
-![image](https://github.com/minuut/Connect/assets/70378641/43b2c6b8-a8c1-4ccc-b2ce-d5d1c11599e5)
-
+It has multi tenancy on the default panel, and the admin panel is to monitor the default (users) panel.
 
 ## Installation
 
