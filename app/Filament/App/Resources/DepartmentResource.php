@@ -85,10 +85,6 @@ class DepartmentResource extends Resource
                     ->boolean()
                     ->searchable()
                     ->sortable(),
-                // mainly serves here as a placeholder for testing
-                Tables\Columns\TextColumn::make('organisation.name')
-                    ->label('Organisatie')
-                    ->sortable(),
             ])
             ->filters([
                 //
