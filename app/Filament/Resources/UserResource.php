@@ -10,15 +10,17 @@ use Filament\Tables\Table;
 use App\Enums\MembershipPlan;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages\ViewUser;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 use App\Filament\Resources\UserResource\RelationManagers;
-use Filament\Tables\Enums\FiltersLayout;
 
 class UserResource extends Resource
 {
@@ -57,10 +59,11 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->hidden(fn ($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
                 Forms\Components\Select::make('roles')
+                    ->label('Rollen')
                     ->relationship('roles', 'name')
                     ->multiple()
-                    ->label('Rol')
-                    ->preload(),
+                    ->preload()
+                    ->default([1]),
                     //->hidden(fn ($livewire) => $livewire instanceof ViewUser)
             ]);
     }
@@ -125,12 +128,16 @@ class UserResource extends Resource
                     ->relationship('membershipPlan', 'name'),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
+                 Impersonate::make()
+                 ->label('test')
+                 ->redirectTo(route('filament.app.tenant')),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+               // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                 //   Tables\Actions\DeleteBulkAction::make(),
+                  //  Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
