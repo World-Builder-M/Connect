@@ -63,13 +63,15 @@ class UserResource extends Resource
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
-                    ->default([1]),
+                    ->default([1])
+                    ->hidden(),
                     //->hidden(fn ($livewire) => $livewire instanceof ViewUser)
             ]);
     }
 
     public static function table(Table $table): Table
     {
+    
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
@@ -112,6 +114,18 @@ class UserResource extends Resource
                     ->formatStateUsing(function (string $state): string {
                         return implode(', ', array_map('ucfirst', explode(', ', $state)));
                     }),
+                    // ->formatStateUsing(function (string $state): string {
+                    //     $excludedRoleNames = ['Gebruiker'];
+                
+                    //     $roles = array_map('ucfirst', explode(', ', $state));
+                
+                    //     // Filter out excluded roles
+                    //     $filteredRoles = array_filter($roles, function ($roleName) use ($excludedRoleNames) {
+                    //         return !in_array($roleName, $excludedRoleNames);
+                    //     });
+                
+                    //     return implode(', ', $filteredRoles);
+                    // }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
