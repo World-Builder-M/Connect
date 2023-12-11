@@ -76,11 +76,6 @@ class EmployeesRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
 
-                // TODO: Implement impersonate
-                Tables\Columns\IconColumn::make('id')
-                ->label('Impersonate')
-                ->boolean()
-                ->trueIcon('heroicon-o-eye'),
             ])
             ->filters([
                 //

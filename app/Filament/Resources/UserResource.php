@@ -136,16 +136,17 @@ class UserResource extends Resource
             ])
             ->defaultSort('name')
             ->filters([
-                // TODO: Translate these to dutch
                 SelectFilter::make('Pakket')
                     ->relationship('membershipPlan', 'name'),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                  Impersonate::make()
-                 ->label('test')
+                 ->label('Impersonate')
+                 ->icon('heroicon-o-eye')
+                 ->button()
                  ->redirectTo(route('filament.app.tenant')),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()->button(),
+                Tables\Actions\EditAction::make()->button(),
                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -159,6 +160,13 @@ class UserResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+     protected function getActions(): array
+    {
+        return [
+            Impersonate::make()->record($this->getRecord()) 
         ];
     }
 
