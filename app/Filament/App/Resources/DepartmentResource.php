@@ -51,9 +51,6 @@ class DepartmentResource extends Resource
                     ->tooltip('Aanvullende basisinformatie over de afdeling')
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('active')
-                    ->label('Actief')
-                    ->hidden(),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('Startdatum')
                     ->tooltip('De startdatum van uw afdeling')
@@ -73,7 +70,7 @@ class DepartmentResource extends Resource
                     ->label('Naam')
                     ->searchable()
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('employees_count')
+                Tables\Columns\TextColumn::make('employees_count')
                     ->counts('employees')
                     ->label('Werknemers')
                     ->searchable()
@@ -81,8 +78,8 @@ class DepartmentResource extends Resource
                 Tables\Columns\IconColumn::make('active')
                     ->label('Actief')
                     ->boolean()
-                    ->searchable()
-                    ->sortable(),
+                    ->getStateUsing(fn ($record): bool => now()->isAfter($record->start_date) && now()->isBefore($record->end_date))
+                
             ])
             ->filters([
                 //

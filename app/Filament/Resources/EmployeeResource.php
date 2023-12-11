@@ -92,8 +92,29 @@ class EmployeeResource extends Resource
                             ->relationship(name: 'department', titleAttribute: 'name')
                             ->searchable()
                             ->preload()
+                            // ->live() makes sure it updates quickly
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set) => $set('organisation_id', null))
                             ->required(),
-                    
+                        Forms\Components\Select::make('organisation_id')
+                            ->label('Organisatie')
+                            ->options(function (Get $get): Collection {
+                                // Retrieve the selected department
+                                $selectedDepartment = Department::find($get('department_id'));
+        
+                                // Check if the department is found and has an associated organisation
+                                if ($selectedDepartment && $selectedDepartment->organisation) {
+                                    // Return a collection with a single option for the associated organisation
+                                    return collect([$selectedDepartment->organisation->id => $selectedDepartment->organisation->name]);
+                                }
+        
+                                // Return an empty collection if no organisation is associated
+                                return collect([]);
+                            })
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->live()
                     ])->columns(2),
                 Forms\Components\Section::make('Persoonsgegevens')
                     ->schema([
@@ -224,6 +245,9 @@ class EmployeeResource extends Resource
                             'city.name'
                         )->label('Stad')
                         ->badge(),
+                        TextEntry::make('organisation.name')
+                            ->label('Organisatie')
+                            ->badge(),
                         TextEntry::make('department.name')
                             ->label('Afdeling')
                             ->badge(),
@@ -274,8 +298,6 @@ class EmployeeResource extends Resource
             return 0;
         }
     }
-
-
 
     public static function getNavigationBadgeColor(): string|array|null
     {

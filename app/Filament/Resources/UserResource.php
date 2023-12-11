@@ -57,13 +57,13 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->hidden(fn ($livewire) => $livewire instanceof EditUser || $livewire instanceof ViewUser),
-                // Forms\Components\Select::make('roles')
-                //     ->label('Rollen')
-                //     ->relationship('roles', 'name')
-                //     ->multiple()
-                //     ->preload()
-                //     ->default([1])
-                //     ->hidden(),
+                Forms\Components\Select::make('roles')
+                    ->label('Rollen')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->default([1])
+                    ->hidden(),
                     //->hidden(fn ($livewire) => $livewire instanceof ViewUser)
             ]);
     }
@@ -105,14 +105,14 @@ class UserResource extends Resource
                                 return $state;
                         }
                     }),
-                // Tables\Columns\TextColumn::make('roles.name')
-                //     ->label('Rollen')
-                //     ->badge()
-                //     ->sortable()
-                //     ->separator(', ')
-                //     ->formatStateUsing(function (string $state): string {
-                //         return implode(', ', array_map('ucfirst', explode(', ', $state)));
-                //     }),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Rollen')
+                    ->badge()
+                    ->sortable()
+                    ->separator(', ')
+                    ->formatStateUsing(function (string $state): string {
+                        return implode(', ', array_map('ucfirst', explode(', ', $state)));
+                    }),
                     // ->formatStateUsing(function (string $state): string {
                     //     $excludedRoleNames = ['Gebruiker'];
                 

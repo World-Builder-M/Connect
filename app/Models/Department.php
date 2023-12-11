@@ -14,7 +14,7 @@ class Department extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'active', 'start_date', 'end_date', 'organisation_id'];
+    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'organisation_id'];
 
     public function employees(): HasMany
     {

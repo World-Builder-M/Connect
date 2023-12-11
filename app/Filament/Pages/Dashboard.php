@@ -17,6 +17,22 @@ class Dashboard extends Page
     /**
      * @var view-string
      */
+
+     public function getSubHeading(): string | Htmlable | null
+     {
+         if (auth()->user()->is_admin) {
+             return null;
+         }
+         
+         // Organisatie op te halen met getTentant();
+         $currentOrganization = Filament::getTenant();
+     
+         $organizationName = $currentOrganization->name;
+
+          return 'van organisatie ' .$organizationName;
+     }
+     
+
     protected static string $view = 'filament-panels::pages.dashboard';
 
     public static function getNavigationLabel(): string
