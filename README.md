@@ -48,7 +48,7 @@ DB_USERNAME=your-database-username
 DB_PASSWORD=your-database-password
 ```
 
-### 7. Migrate the and seed the database
+### 7. Migrate and seed the database
 ```bash
 php artisan migrate --seed
 ```
