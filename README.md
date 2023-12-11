@@ -4,7 +4,7 @@
 
 This project is my playground for learning Laravel Filament V3.
 
-I've added Filament Shield for permission handling. I will be expanding this project in my free time.
+I will be expanding this project in my free time.
 It has multi tenancy on the default panel, and the admin panel is to monitor the default (users) panel.
 
 Alot of it will be changed overtime as I am learning it on the go.
@@ -48,9 +48,9 @@ DB_USERNAME=your-database-username
 DB_PASSWORD=your-database-password
 ```
 
-### 7. Migrate the Database
+### 7. Migrate and seed the database
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
 
 ### 8. Install NPM Dependencies
@@ -62,3 +62,4 @@ npm install
 ```bash
 npm run dev
 ```
+
