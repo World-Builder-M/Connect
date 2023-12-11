@@ -28,13 +28,13 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            //->default()
+             // ->default()
             ->profile()
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->id('admin')
             ->path('admin')
             ->login()
-            // ->emailVerification()
+           // ->emailVerification()
             ->registration()
             ->colors([
                 'primary' => ThemeColor::CONNECT,
@@ -75,7 +75,7 @@ class AdminPanelProvider extends PanelProvider
                     ->defaultLocales(['en', 'nl']),
             )
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+               
             ]);
     }
 }

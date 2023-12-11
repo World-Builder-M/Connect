@@ -1,30 +1,30 @@
 @php
-    $user = filament()
-        ->auth()
-        ->user();
+    // $user = filament()
+    //     ->auth()
+    //     ->user();
 
-    $membershipPlan = $user->membershipPlan;
+    // $membershipPlan = $user->membershipPlan;
 
-    $planName = $membershipPlan->name;
+    // $planName = $membershipPlan->name;
 
-    if (!$planName) {
-        $planName = 'Demo';
-    }
+    // if (!$planName) {
+    //     $planName = 'Demo';
+    // }
 
-    switch ($planName) {
-        case \App\Enums\MembershipPlan::BASIC:
-            $colorClass = '#888888';
-            break;
-        case \App\Enums\MembershipPlan::STANDARD:
-            $colorClass = '#f0f0f0';
-            break;
-        case \App\Enums\MembershipPlan::PREMIUM:
-            $colorClass = '#ffbf00';
-            break;
-        default:
-            $colorClass = '#888888';
-            break;
-    }
+    // switch ($planName) {
+    //     case \App\Enums\MembershipPlan::BASIC:
+    //         $colorClass = '#888888';
+    //         break;
+    //     case \App\Enums\MembershipPlan::STANDARD:
+    //         $colorClass = '#f0f0f0';
+    //         break;
+    //     case \App\Enums\MembershipPlan::PREMIUM:
+    //         $colorClass = '#ffbf00';
+    //         break;
+    //     default:
+    //         $colorClass = '#888888';
+    //         break;
+    // }
 @endphp
 
 <x-filament-widgets::widget class="fi-account-widget">
@@ -37,8 +37,8 @@
 
             <div class="flex-2">
                 <p class="text-xl font-semibold">
-                    <span class="text-green-600">$ </span>
-                    <span style="color: {{ $colorClass }} !important;">{{ $planName }}</span>
+                    {{-- <span class="text-green-600">$ </span>
+                    <span style="color: {{ $colorClass }} !important;">{{ $planName }}</span> --}}
                 </p>
             </div>
         </div>

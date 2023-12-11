@@ -83,7 +83,7 @@ class AppPanelProvider extends PanelProvider
                     ->defaultLocales(['en', 'nl']),
             )
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+               
             ])
             ->tenantMiddleware([
                 ApplyTenantScopes::class,

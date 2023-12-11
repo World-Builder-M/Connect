@@ -10,7 +10,6 @@ use Filament\Tables\Table;
 use App\Enums\MembershipPlan;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\QueryException;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;

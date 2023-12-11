@@ -27,9 +27,4 @@ class Organisation extends Model
     {
         return $this->belongsToMany(User::class);
     }
-
-    public function roles(): HasMany
-    {
-        return $this->HasMany(Role::class);
-    }
 }
