@@ -14,8 +14,6 @@ class ViewUser extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            // Impersonate::make()->record($this->getRecord()) 
-            // ->redirectTo(route('filament.app.tenant')),
             Actions\EditAction::make(),
         ];
     }
