@@ -24,9 +24,14 @@ class ListEmployees extends ListRecords
 
     public function getTabs(): array
     {
-        $url = url()->current();
-        
-        $isAdmin = Str::startsWith($url, url('/admin'));
+
+        /**
+         *  ->tenantMiddleware([
+                ApplyTenantScopes::class,
+            ], isPersistent: true); 
+
+            In the AppPanelProvider, so we don't have to worry about this query
+        */
 
         $tabs = [
             'Alle' => Tab::make(),
@@ -41,18 +46,14 @@ class ListEmployees extends ListRecords
                 ->badge(Employee::query()->where('hired_at', '>=', now()->subYear())->count()),
         ];
 
-        if ($isAdmin) {
             return $tabs;
-        } else {
-            return [];
-        }
     }
 
 
     protected function getHeaderWidgets(): array
     {
         return [
-            // EmployeeOverview::class,
+            //  EmployeeOverview::class,
         ];
     }
 }

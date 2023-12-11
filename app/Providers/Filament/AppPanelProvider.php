@@ -52,6 +52,7 @@ class AppPanelProvider extends PanelProvider
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->tenant(Organisation::class, ownershipRelationship: 'organisation', slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganisation::class)
+            
             ->tenantProfile(EditOrganisationProfile::class)
             ->colors([
                 'primary' => ThemeColor::CONNECT,
@@ -96,6 +97,10 @@ class AppPanelProvider extends PanelProvider
             )
             ->plugins([
                
-            ]);
+            ])
+            ->tenantMiddleware([
+                ApplyTenantScopes::class,
+            ], isPersistent: true);
+            
     }
 }
