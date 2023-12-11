@@ -50,7 +50,6 @@ class EmployeeResource extends Resource
 
     protected static ?int $navigationSort = -3;
 
-    protected static bool $isScopedToTenant = true;
 
 
     public static function form(Form $form): Form
