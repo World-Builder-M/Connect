@@ -19,8 +19,10 @@ class RegisterOrganisation extends RegisterTenant
     {
           return $form
                 ->schema([
-                      TextInput::make('name'),
-                      TextInput::make('slug'),
+                      TextInput::make('name')
+                      ->unique(),
+                      TextInput::make('slug')
+                      ->unique(),
                 ]);
     }
     

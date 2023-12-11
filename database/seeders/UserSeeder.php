@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\MembershipPlan;
+use Illuminate\Support\Facades\Hash;
 
 use Carbon\Carbon;
 
@@ -12,19 +13,17 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $membershipPlans = MembershipPlan::all();
+        $premiumPlan = MembershipPlan::where('name', 'Premium')->first();
 
-        User::factory(100)->create()->each(function ($user) use ($membershipPlans) {
-            $randomPlan = $membershipPlans->random();
-            $user->membership_plan_id = $randomPlan->id;
-
-            $user->created_at = Carbon::now()->subDays(rand(1, 365));
-
-            if (rand(0, 1)) {
-                $user->email_verified_at = Carbon::now();
-            }
-
-            $user->save();
-        });
+        // Create a specific user with the email "connect@test.com" and the premium plan
+        $specificUser = User::factory()->create([
+            'name' => 'connect@test.com',
+            'email' => 'connect@test.com',
+            'is_admin' => true,
+            'password' => Hash::make('connect@test.com'),
+            'membership_plan_id' => $premiumPlan->id,
+            'created_at' => Carbon::now()->subDays(rand(1, 365)),
+            'email_verified_at' => Carbon::now(),
+        ]);
     }
 }

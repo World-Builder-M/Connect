@@ -9,7 +9,9 @@ use Filament\PanelProvider;
 use App\Constants\ThemeColor;
 use App\Livewire\MembershipPlan;
 use App\Livewire\ActiveUserCount;
+use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
+use App\Http\Middleware\VerifyIsAdmin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\SpatieLaravelTranslatablePlugin;
 use Illuminate\Session\Middleware\StartSession;
@@ -32,7 +34,12 @@ class AdminPanelProvider extends PanelProvider
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->id('admin')
             ->path('admin')
-            ->registration()
+            ->userMenuItems([
+                MenuItem::make()
+                ->label('Dashboard')
+                ->icon('heroicon-o-cog-6-tooth')
+                ->url('/app')
+            ])
             ->colors([
                 'primary' => ThemeColor::CONNECT,
                 'danger' => Color::Red,
@@ -66,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                VerifyIsAdmin::class,
             ])
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()

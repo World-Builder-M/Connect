@@ -5,32 +5,26 @@ namespace App\Filament\App\Resources;
 use Filament\Forms;
 use App\Models\City;
 use Filament\Tables;
-use App\Models\Country;
+use App\Models\State;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Employee;
 use App\Models\Province;
 use Filament\Forms\Form;
-use App\Models\Department;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
-use Illuminate\Support\Carbon;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
-use Filament\Tables\Filters\Filter;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
-use Filament\Tables\Enums\FiltersLayout;
-use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Filament\App\Resources\EmployeeResource\Pages;
+use App\Filament\App\Resources\EmployeeResource\RelationManagers;
+use App\Filament\App\Resources\EmployeeResource\Widgets\PanelEmployeeOverviewMessage;
 
 class EmployeeResource extends Resource
 {
@@ -269,6 +263,13 @@ class EmployeeResource extends Resource
     //       $e = '✓';
     //       return $e;
     // }
+
+    public static function getWidgets(): array
+    {
+        return [
+            PanelEmployeeOverviewMessage::class,
+        ];
+    }
     
     public static function getPages(): array
     {

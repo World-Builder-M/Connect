@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
          $this->call(NetherlandsCitiesSeeder::class); 
 
          $this->call(MembershipPlanSeeder::class);
-        //  $this->call(UserSeeder::class);
+         $this->call(UserSeeder::class);
 
 
     }

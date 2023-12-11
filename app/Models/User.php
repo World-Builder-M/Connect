@@ -27,6 +27,7 @@ class User extends Authenticatable implements  HasTenants
         'name',
         'email',
         'password',
+        'is_admin',
         'membership_plan_id',
     ];
 
@@ -48,6 +49,7 @@ class User extends Authenticatable implements  HasTenants
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'boolean',
     ];
 
     public function membershipPlan()
@@ -64,7 +66,9 @@ class User extends Authenticatable implements  HasTenants
 
         static::creating(function ($user) {
             if (!$user->membership_plan_id) {
-                $basicPlan = \App\Models\MembershipPlan::where('name', \App\Enums\MembershipPlan::BASIC)->first();
+                $basicPlan = \App\Models\MembershipPlan::where
+                    ('name', \App\Enums\MembershipPlan::BASIC)
+                    ->first();
                 $user->membership_plan_id = $basicPlan->id ?? null;
             }
         });
@@ -72,13 +76,6 @@ class User extends Authenticatable implements  HasTenants
 
     public function getFilamentAvatarUrl(): ?string
     {
-        // TODO: Configure this
-        $customAvatarPath = public_path('customavater.png');
-
-        if (file_exists($customAvatarPath)) {
-            return asset('connect.png');
-        }
-
         return $this->avatar_url;
     }
 

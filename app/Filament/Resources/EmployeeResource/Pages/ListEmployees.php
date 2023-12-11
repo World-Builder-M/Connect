@@ -52,7 +52,7 @@ class ListEmployees extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            EmployeeOverview::class,
+            // EmployeeOverview::class,
         ];
     }
 }

@@ -13,6 +13,8 @@ use App\Models\Province;
 use Filament\Forms\Form;
 use App\Models\Department;
 use Filament\Tables\Table;
+use App\Models\Organisation;
+use Filament\Facades\Filament;
 use Illuminate\Support\Carbon;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -50,10 +52,9 @@ class EmployeeResource extends Resource
 
     protected static ?int $navigationSort = -3;
 
-
-
     public static function form(Form $form): Form
     {
+
         return $form
             ->schema([
                 Forms\Components\Section::make('Vestigingslocatie & Afdeling')
@@ -92,6 +93,7 @@ class EmployeeResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required(),
+                    
                     ])->columns(2),
                 Forms\Components\Section::make('Persoonsgegevens')
                     ->schema([

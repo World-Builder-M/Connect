@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use Filament\Pages;
 use Filament\Panel;
+use App\Models\Team;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use App\Models\Organisation;
@@ -35,12 +36,19 @@ class AppPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
             ->id('app')
             ->path('app')
             ->profile()
             ->registration()
             ->login()
-            ->default()
+            ->userMenuItems([
+                MenuItem::make()
+                ->label('Admin')
+                ->icon('heroicon-o-cog-6-tooth')
+                ->url('/admin')
+                ->visible(fn (): bool => auth()->user()->is_admin)
+            ])
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->tenant(Organisation::class, ownershipRelationship: 'organisation', slugAttribute: 'slug')
             ->tenantRegistration(RegisterOrganisation::class)
@@ -88,10 +96,6 @@ class AppPanelProvider extends PanelProvider
             )
             ->plugins([
                
-            ])
-            ->tenantMiddleware([
-                ApplyTenantScopes::class,
-            ], isPersistent: true)
-            ;
+            ]);
     }
 }
