@@ -28,13 +28,10 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-             // ->default()
             ->profile()
             ->defaultAvatarProvider(BoringAvatarsProvider::class)
             ->id('admin')
             ->path('admin')
-            ->login()
-           // ->emailVerification()
             ->registration()
             ->colors([
                 'primary' => ThemeColor::CONNECT,

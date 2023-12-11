@@ -8,6 +8,7 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use App\Models\Organisation;
 use App\Constants\ThemeColor;
+use App\Livewire\MembershipPlan;
 use App\Livewire\ActiveUserCount;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
@@ -64,7 +65,7 @@ class AppPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                // MembershipPlan::class,
+                MembershipPlan::class,
                 ActiveUserCount::class,
             ])
             ->middleware([
