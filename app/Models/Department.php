@@ -26,6 +26,11 @@ class Department extends Model
         return $this->belongsTo(Organisation::class);
     }
 
+    public function assets(): HasMany
+    {
+        return $this->hasMany(Asset::class);
+    }
+
     public function getActiveAttribute()
     {
         $now = Carbon::now();

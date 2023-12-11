@@ -31,6 +31,7 @@ use Filament\Infolists\Components\TextEntry;
 use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Filament\Resources\EmployeesResource\RelationManagers\AssetsRelationManager;
 
 class EmployeeResource extends Resource
 {
@@ -286,7 +287,7 @@ class EmployeeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AssetsRelationManager::class,
         ];
     }
 

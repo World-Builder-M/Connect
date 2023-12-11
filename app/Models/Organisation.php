@@ -27,4 +27,9 @@ class Organisation extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function assets(): HasMany
+    {
+        return $this->hasMany(Asset::class);
+    }
 }

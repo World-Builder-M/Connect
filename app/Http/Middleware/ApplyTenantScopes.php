@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Models\User;
+use App\Models\Asset;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\Organisation;
@@ -26,6 +27,10 @@ class ApplyTenantScopes
         );
 
         Department::addGlobalScope(
+            fn (Builder $query) => $query->whereBelongsTo(Filament::getTenant()),
+        );
+
+        Asset::addGlobalScope(
             fn (Builder $query) => $query->whereBelongsTo(Filament::getTenant()),
         );
         
