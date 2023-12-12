@@ -5,6 +5,8 @@ namespace App\Filament\Resources\EmployeesResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Asset;
+use Filament\Forms\Set;
+use App\Models\Employee;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,13 +24,8 @@ class AssetsRelationManager extends RelationManager
     protected static ?string $pluralLabel = 'werwe';
 
     public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+    {   
+        
     }
 
     public function table(Table $table): Table
@@ -84,8 +81,18 @@ class AssetsRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            //    Tables\Actions\EditAction::make(),
+            //    Tables\Actions\DeleteAction::make(),
+
+            // Simple action to detach asset from employee
+               Tables\Actions\Action::make('Ontkoppelen')
+               ->label('Ontkoppelen')
+               ->icon("heroicon-o-x-mark")
+               ->requiresConfirmation()
+               ->action(function (Asset $record) {
+                $record->employee_id = null;
+                $record->save();
+               }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

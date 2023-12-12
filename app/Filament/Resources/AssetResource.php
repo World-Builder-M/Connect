@@ -17,6 +17,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AssetResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\AssetResource\RelationManagers;
 
 class AssetResource extends Resource
@@ -75,8 +76,7 @@ class AssetResource extends Resource
                 //         return collect([]);
                 //     })
                 //     ->preload()
-                //     ->live()
-                //     ->required(),
+                //     ->live(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -92,6 +92,7 @@ class AssetResource extends Resource
                     ->default(Asset::STATUS_AVAILABLE)
                     ->options(Asset::getStatusOptions()),
                 Forms\Components\Textarea::make('description')
+                    ->label('Overige informatie')
                     ->maxLength(65535)
                     ->columnSpanFull(),
             ]);

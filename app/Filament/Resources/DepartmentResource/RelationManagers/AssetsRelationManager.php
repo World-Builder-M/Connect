@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DepartmentResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Asset;
+use App\Models\Employee;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,12 +22,11 @@ class AssetsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {
-        $department = $this->getRecord();
+        $department = $this->getOwnerRecord();
 
-      
         $departmentEmployees = Employee::where('department_id', $department->id)
             ->get()
-            ->pluck('name', 'id')
+            ->pluck('first_name', 'id')
             ->toArray();
             
         return $form
@@ -91,7 +91,7 @@ class AssetsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
