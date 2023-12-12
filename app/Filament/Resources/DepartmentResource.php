@@ -17,6 +17,7 @@ use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\DepartmentResource\Pages;
 use App\Filament\Resources\DepartmentResource\RelationManagers;
+use App\Filament\Resources\DepartmentResource\RelationManagers\AssetsRelationManager;
 use App\Filament\Resources\DepartmentResource\RelationManagers\EmployeesRelationManager;
 
 class DepartmentResource extends Resource
@@ -123,6 +124,7 @@ class DepartmentResource extends Resource
     {
         return [
             EmployeesRelationManager::class,
+            AssetsRelationManager::class,
         ];
     }
 

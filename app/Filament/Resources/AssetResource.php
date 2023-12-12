@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AssetResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AssetResource\RelationManagers;
-use App\Filament\Resources\AssetResource\RelationManagers\EmployeesRelationManager;
 
 class AssetResource extends Resource
 {
@@ -172,7 +171,7 @@ class AssetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            EmployeesRelationManager::class,
+     
         ];
     }
 
