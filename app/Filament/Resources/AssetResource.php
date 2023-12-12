@@ -64,19 +64,19 @@ class AssetResource extends Resource
                     ->preload()
                     ->required()
                     ->live(),
-                // Forms\Components\Select::make('employee_id')
-                //     ->label('Werknemer')
-                //     ->options(function (Get $get): Collection {
-                //         $selectedDepartment = Department::find($get('department_id'));
+                Forms\Components\Select::make('employee_id')
+                    ->label('Werknemer')
+                    ->options(function (Get $get): Collection {
+                        $selectedDepartment = Department::find($get('department_id'));
 
-                //         if ($selectedDepartment && $selectedDepartment->organisation) {
-                //             return $selectedDepartment->employees->pluck('first_name', 'id');
-                //         }
+                        if ($selectedDepartment && $selectedDepartment->organisation) {
+                            return $selectedDepartment->employees->pluck('first_name', 'id');
+                        }
 
-                //         return collect([]);
-                //     })
-                //     ->preload()
-                //     ->live(),
+                        return collect([]);
+                    })
+                    ->preload()
+                    ->live(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -90,7 +90,9 @@ class AssetResource extends Resource
                 Forms\Components\Select::make('status')
                     ->required()
                     ->default(Asset::STATUS_AVAILABLE)
-                    ->options(Asset::getStatusOptions()),
+                    ->options(function (Get $get): array {
+                        return $get('employee_id') ? [Asset::STATUS_IN_USE => 'In gebruik'] : [Asset::STATUS_AVAILABLE => 'Beschikbaar'];
+                    }),
                 Forms\Components\Textarea::make('description')
                     ->label('Overige informatie')
                     ->maxLength(65535)
