@@ -185,6 +185,11 @@ class AssetResource extends Resource
         }
     }
 
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 0 ? 'primary' : 'gray';
+    }
+
     public static function getPages(): array
     {
         return [
