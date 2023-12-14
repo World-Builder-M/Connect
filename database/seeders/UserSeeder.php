@@ -14,8 +14,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         $premiumPlan = MembershipPlan::where('name', 'Premium')->first();
+        $basicPlan = MembershipPlan::where('name', 'Basic')->first();
 
-        // Create a specific user with the email "connect@test.com" and the premium plan
+        Create a specific user with the email "connect@test.com" and the premium plan
         $specificUser = User::factory()->create([
             'name' => 'connect@test.com',
             'email' => 'connect@test.com',
@@ -25,5 +26,13 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now()->subDays(rand(1, 365)),
             'email_verified_at' => Carbon::now(),
         ]);
+
+        for ($i = 0; $i < 30; $i++) {
+            User::factory()->create([
+                'membership_plan_id' => $basicPlan->id,
+                'created_at' => Carbon::now()->subDays(rand(1, 365)),
+                'email_verified_at' => Carbon::now(),
+            ]);
+        }
     }
 }
