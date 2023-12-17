@@ -91,6 +91,7 @@ class AssetsRelationManager extends RelationManager
                ->requiresConfirmation()
                ->action(function (Asset $record) {
                 $record->employee_id = null;
+                $record->status = Asset::STATUS_AVAILABLE;
                 $record->save();
                }),
             ])
