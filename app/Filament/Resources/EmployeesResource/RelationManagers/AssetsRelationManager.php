@@ -25,7 +25,8 @@ class AssetsRelationManager extends RelationManager
 
     public function form(Form $form): Form
     {   
-        
+        return $form
+            ->schema([]);
     }
 
     public function table(Table $table): Table

@@ -198,6 +198,7 @@ class AssetResource extends Resource
             'index' => Pages\ListAssets::route('/'),
             'create' => Pages\CreateAsset::route('/create'),
             'edit' => Pages\EditAsset::route('/{record}/edit'),
+            'manage' => Pages\ManageContracts::route('/{record}/manage')
         ];
     }
 }
